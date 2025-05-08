@@ -1,5 +1,6 @@
 package com.budgetapp.controller;
 
+import com.budgetapp.dto.BudgetSummaryDTO;
 import com.budgetapp.model.Budget;
 import com.budgetapp.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +47,19 @@ public class BudgetController {
     public ResponseEntity<Void> deleteBudget(@PathVariable Long id) {
         return (budgetService.deleteBudget(id)) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+    @GetMapping("/{id}/summary")
+    public ResponseEntity<BudgetSummaryDTO> getBudgetSummary(@PathVariable Long id) {
+        Budget budget = budgetService.getBudgetById(id);
+        if (budget == null) {
+            return ResponseEntity.notFound().build();
+        }
+        BudgetSummaryDTO summary = budgetService.getBudgetSummary(budget);
+        return ResponseEntity.ok(summary);
+    }
+    @GetMapping("/summary")
+    public ResponseEntity<BudgetSummaryDTO> getOverallBudgetSummary() {
+        BudgetSummaryDTO summary = budgetService.getOverallSummary(); // You need to implement this
+        return ResponseEntity.ok(summary);
+    }
+
 }
