@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - Penny Flow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+    <header class="site-header">
+    <h1 class="brand-name"><span class="highlight">Penny</span> Flow</h1>
+</header>
+
+    <main class="dashboard" style="justify-content: center;">
+        <section class="form-container">
+            <h2 style="color: white;">Sign Up</h2>
+            <form action="/signup" method="POST">
+                <label for="phone">Phone Number:</label><br>
+                <input type="tel" id="phone" name="phone" required><br><br>
+
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required><br><br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+
+                <button type="submit">Create Account</button>
+            </form>
+            <p style="color: white;">Already have an account? <a href="login.html" style="color: #fdfdfd;">Log in</a></p>
+        </section>
+    </main>
+</body>
+</html>
