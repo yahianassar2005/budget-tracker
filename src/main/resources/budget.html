@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>User Dashboard</title>
@@ -15,10 +15,10 @@
 
     <nav class="main-nav">
         <ul>
-            <li><a href ="/">Home</a></li>
-            <li><a href="/income-expense">Track Expense</a></li>
-            <li><a href="/budget">Set a Budget</a></li>
-            <li><a href="/Reminder">Set a Reminder</a></li>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/income-expense}">Track  income and Expense</a></li>
+            <li><a th:href="@{/budget}">Set a Budget</a></li>
+            <li><a th:href="@{/reminder}">Set a Reminder</a></li>
         </ul>
     </nav>
     
