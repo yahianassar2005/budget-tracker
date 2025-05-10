@@ -1,35 +1,31 @@
 package com.budgetapp.service;
 
-import com.budgetapp.repository.UserRepository;
-import com.budgetapp.dto.RegisterRequest;
 import com.budgetapp.model.User;
+import com.budgetapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
-    }
+    private UserRepository userRepository;
 
-    public User register(RegisterRequest request) {
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email is already registered.");
+    public User register(User user) {
+        if (!user.getEmail().endsWith("@gmail.com")) {
+            throw new IllegalArgumentException("Email must end with @gmail.com");
         }
-
-        User user = User.builder()
-                .email(request.getEmail())
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .build();
-
         return userRepository.save(user);
     }
+    public Optional<User> login(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            return Optional.of(user);
+        } else {
+            return Optional.empty();
+        }
+    }
+
 }
