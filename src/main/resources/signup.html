@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign Up</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/stylesheet.css">
 </head>
 <body>
   <h2>Sign Up</h2>
@@ -29,7 +29,7 @@
         if (!res.ok) return res.text().then(msg => Promise.reject(msg));
         return res.json();
       })
-      .then(data => alert("Signup successful!\n" + JSON.stringify(data, null, 2)))
+      .then(data => { alert("Signup successful!\n" window.location.href = "/userDashboard";})
       .catch(err => alert("Signup failed: " + err));
     });
   </script>
