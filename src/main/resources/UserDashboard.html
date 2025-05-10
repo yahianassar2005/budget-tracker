@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/stylesheet.css"> 
+</head>
+<body>
+    <header class="site-header">
+    <h1 class="brand-name"><span class="highlight">Penny</span> Flow</h1>
+</header>
+
+    
+
+    <nav class="main-nav">
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/income-expense}">Track  income and Expense</a></li>
+            <li><a th:href="@{/budget}">Set a Budget</a></li>
+            <li><a th:href="@{/reminder}">Set a Reminder</a></li>
+        </ul>
+    </nav>
+
+    <main class="dashboard">
+        <section class="intro-box">
+            <div class="intro-text">
+                <h1>PENNY FLOW</h1>
+                <p>
+                    Easily track your income, expenses, and savings all in one place.
+                    Make smarter decisions and achieve financial peace of mind.
+                </p>
+            </div>
+        </section>
+    
+        <section class="image-box">
+            <div class="hero-image">
+                <img src="/images/image.png" alt="A person using a laptop with financial charts">
+            </div>
+        </section>
+    </main>
+<script src="/js/main.js"></script>
+</body>
+</html>
