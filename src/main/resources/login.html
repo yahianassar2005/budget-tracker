@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login - Penny Flow</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/stylesheet.css">
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <header class="site-header">
-    <h1 class="brand-name"><span class="highlight">Penny</span> Flow</h1>
-</header>
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label>Email:</label>
+    <input type="email" id="email" required><br>
+    <label>Password:</label>
+    <input type="password" id="password" required><br>
+    <button type="submit">Login</button>
+  </form>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-    <main class="dashboard" style="justify-content: center;">
-        <section class="form-container">
-            <h2 style="color: white;">Login</h2>
-            <form action="/login" method="POST">
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" required><br><br>
-
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" required><br><br>
-
-                <button type="submit">Log In</button>
-            </form>
-            <p style="color: white;">Don't have an account? <a href="signup.html" style="color: #fdfdfd;">Sign up</a></p>
-        </section>
-    </main>
-    <script src="/js/main.js"></script>
+      fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      })
+      .then(res => {
+        if (!res.ok) return res.text().then(msg => Promise.reject(msg));
+        return res.text(); // Login returns plain string
+      })
+      .then(message => {
+        alert("Login successful: " + message);
+        window.location.href = "/userDashboard"; // Adjust as needed
+      })
+      .catch(err => alert("Login failed: " + err));
+    });
+  </script>
 </body>
 </html>
