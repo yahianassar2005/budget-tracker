@@ -4,44 +4,35 @@
     <meta charset="UTF-8">
     <title>User Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Roboto&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/stylesheet.css">
+    <link rel="stylesheet" href="/css/stylesheet.css"> 
 </head>
 <body>
-
     <header class="site-header">
-    <h1 class="brand-name"><span class="highlight">Penny</span> Flow</h1>
-</header>
+        <h1 class="brand-name"><span class="highlight">Penny</span> Flow</h1>
+    </header>
 
     <nav class="main-nav">
         <ul>
             <li><a th:href="@{/}">Home</a></li>
-            <li><a th:href="@{/income-expense}">Track income and Expense</a></li>
+            <li><a th:href="@{/income-expense}">Track income and Expense</a></li> 
             <li><a th:href="@{/budget}">Set a Budget</a></li>
             <li><a th:href="@{/reminder}">Set a Reminder</a></li>
         </ul>
     </nav>
     
-<div class="form-container">
-    <form>
-  <h2>Set the budget you want!</h2>
+    <div class="form-container">
+        <form>
+            <h2>Set the budget you want!</h2>
+            <label for="category">Category</label><br>
+            <input type="text" id="category" name="category"><br><br>
+            <label for="amount">Amount</label><br>
+            <input type="text" id="amount" name="amount">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
-  <label for="category">Category</label><br>
-  <input type="text" id="category" name="category"><br><br>
+    <div class="showing-budget"></div> 
 
-  <label for="amount">Amount</label><br>
-  <input type="text" id="amount" name="amount">
-    <input type="submit" value="Submit">
-    </form>
-
-</div>
-
-<div class = "showing-budget">
-
-
-</div>
-
-
-  <script src="/js/main.js"></script>
-
+    <script src="/js/main.js"></script>
 </body>
 </html>
