@@ -1,7 +1,9 @@
 package com.budgetapp.controller;
 
 import com.budgetapp.dto.BudgetSummaryDTO;
+import com.budgetapp.dto.TransactionDTO;
 import com.budgetapp.model.Budget;
+import com.budgetapp.model.Transaction;
 import com.budgetapp.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/budgets")
-@CrossOrigin(origins = "*") // Optional: allow frontend access
+@CrossOrigin(origins = "*")
 public class BudgetController {
 
     private final BudgetService budgetService;
@@ -21,6 +23,7 @@ public class BudgetController {
         this.budgetService = budgetService;
     }
 
+    // Existing budget endpoints
     @GetMapping
     public List<Budget> getAllBudgets() {
         return budgetService.getAllBudgets();
@@ -29,7 +32,7 @@ public class BudgetController {
     @GetMapping("/{id}")
     public ResponseEntity<Budget> getBudgetById(@PathVariable Long id) {
         Budget budget = budgetService.getBudgetById(id);
-        return (budget != null) ? ResponseEntity.ok(budget) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(budget);
     }
 
     @PostMapping
@@ -40,26 +43,42 @@ public class BudgetController {
     @PutMapping("/{id}")
     public ResponseEntity<Budget> updateBudget(@PathVariable Long id, @RequestBody Budget budget) {
         Budget updated = budgetService.updateBudget(id, budget);
-        return (updated != null) ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBudget(@PathVariable Long id) {
-        return (budgetService.deleteBudget(id)) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        budgetService.deleteBudget(id);
+        return ResponseEntity.noContent().build();
     }
+
+    // Transaction endpoints
+    @PostMapping("/{budgetId}/transactions")
+    public ResponseEntity<Transaction> addTransactionToBudget(
+            @PathVariable Long budgetId,
+            @RequestParam Long userId,
+            @RequestBody TransactionDTO dto) {
+        Transaction transaction = budgetService.addTransactionToBudget(budgetId, userId, dto);
+        return ResponseEntity.ok(transaction);
+    }
+
+    @GetMapping("/{budgetId}/transactions")
+    public ResponseEntity<List<Transaction>> getBudgetTransactions(
+            @PathVariable Long budgetId) {
+        List<Transaction> transactions = budgetService.getBudgetTransactions(budgetId);
+        return ResponseEntity.ok(transactions);
+    }
+
+    // Summary endpoints
     @GetMapping("/{id}/summary")
     public ResponseEntity<BudgetSummaryDTO> getBudgetSummary(@PathVariable Long id) {
-        Budget budget = budgetService.getBudgetById(id);
-        if (budget == null) {
-            return ResponseEntity.notFound().build();
-        }
-        BudgetSummaryDTO summary = budgetService.getBudgetSummary(budget);
-        return ResponseEntity.ok(summary);
-    }
-    @GetMapping("/summary")
-    public ResponseEntity<BudgetSummaryDTO> getOverallBudgetSummary() {
-        BudgetSummaryDTO summary = budgetService.getOverallSummary(); // You need to implement this
+        BudgetSummaryDTO summary = budgetService.getBudgetSummary(id);
         return ResponseEntity.ok(summary);
     }
 
+    @GetMapping("/summary")
+    public ResponseEntity<BudgetSummaryDTO> getOverallBudgetSummary() {
+        BudgetSummaryDTO summary = budgetService.getOverallSummary();
+        return ResponseEntity.ok(summary);
+    }
 }
